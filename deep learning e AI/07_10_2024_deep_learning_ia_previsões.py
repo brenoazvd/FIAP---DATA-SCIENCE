@@ -94,6 +94,18 @@ for i in range(90, final):
 X_teste = np.array(X_teste)
 X_teste = np.reshape(X_teste, (X_teste.shape[0], X_teste.shape[1], 1))
 
+#efetua as previsões
 previsoes = regressor.predict(X_teste)
+#reconverte ("desnormaliza") os dados para R$
 previsoes = normalizador.inverse_transform(previsoes)
 
+print("Média previsões: R${:-f}".format(previsoes.mean()))
+print("Média real: R${:.2f}".format(preco_real_teste.mean()))
+
+plt.plot(preco_real_teste, color = 'red', label = 'Preço real')
+plt.plot(previsoes, color = 'blue', label = 'Previsões')
+plt.title('Previsão preço das ações PETR4')
+plt.xlabel('Tempo (dias)')
+plt.ylabel('Valor da ação (R$)')
+plt.legend()
+plt.show()
